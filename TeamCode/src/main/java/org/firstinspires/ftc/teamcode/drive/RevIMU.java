@@ -1,12 +1,14 @@
-package org.firstinspires.ftc.teamcode.utility;
+package org.firstinspires.ftc.teamcode.drive;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
+/**
+ * DriveIMU implementing Rev Control Hub Internal IMU
+ */
 public class RevIMU implements DriveIMU {
     IMU imu;
     public RevIMU(HardwareMap hwMap){

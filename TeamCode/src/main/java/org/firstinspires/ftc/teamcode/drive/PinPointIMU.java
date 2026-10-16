@@ -1,12 +1,10 @@
-package org.firstinspires.ftc.teamcode.utility;
+package org.firstinspires.ftc.teamcode.drive;
 
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.Const;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 public class PinPointIMU implements DriveIMU{
@@ -29,13 +27,30 @@ public class PinPointIMU implements DriveIMU{
 
     }
 
+    /**
+     * Reset the yaw of the robot to 0
+     * does not use pinpoint hardware reset to avoid calibration error while driving
+     */
     @Override
     public void resetYaw() {
         angleOffest = pp.getHeading(AngleUnit.RADIANS);
     }
 
+    /**
+     * Get the corrected yaw of the robot in radians, wrapped to (0, 2pi)
+     * @return yaw in radians
+     */
     @Override
     public double getYaw() {
-        return (pp.getHeading(AngleUnit.RADIANS) - angleOffest) % (Math.PI * 2);
+        // resetting the imu through pinpoint can cause calibration error while driving
+        // use the offset and wrap into (0, 2pi) to avoid this
+
+        double adjustedAngle = pp.getHeading(AngleUnit.RADIANS) - angleOffest;
+        if (adjustedAngle < 0) {
+            adjustedAngle += 2 * Math.PI;
+        } else if (adjustedAngle >= 2 * Math.PI) {
+            adjustedAngle -= 2 * Math.PI;
+        }
+        return adjustedAngle;
     }
 }

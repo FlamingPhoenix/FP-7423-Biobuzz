@@ -1,18 +1,15 @@
-package org.firstinspires.ftc.teamcode.utility;
+package org.firstinspires.ftc.teamcode.drive;
 
 import static java.lang.Math.abs;
 
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.IMU;
-
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class FieldCentricDrive {
     DcMotor fl, fr, bl, br;
     DriveIMU imu;
+    double multiplier = 1.0;
     /**
      * Initialize motors
      * @param hardwareMap hardwareMap from opmode
@@ -53,6 +50,10 @@ public class FieldCentricDrive {
     /**
      * Drive based off of gamepad
      * More functionality because of more access to controls
+     * default speed limited to 0.75
+     * right trigger = slow mode, (0.25 to 0.75)
+     * left trigger = full speed mode (0.75 to 1.0)
+     * options button = reset IMU
      * @param gamepad1 gamepad 1
      */
     public void drive(Gamepad gamepad1){
@@ -73,16 +74,19 @@ public class FieldCentricDrive {
         double frp = (rotY - rotX - rx) / denominator;
         double brp = (rotY + rotX - rx) / denominator;
 
-        flp = flp * (1 - gamepad1.right_trigger);
-        blp = blp * (1 - gamepad1.right_trigger);
-        frp = frp * (1 - gamepad1.right_trigger);
-        brp = brp * (1 - gamepad1.right_trigger);
+
+        // Slow mode with right trigger
+        multiplier = 0.75 - (gamepad1.right_trigger * 0.5); // Adjust the multiplier based on the right trigger value
+        if(gamepad1.left_trigger > 0.1){
+            multiplier = 0.75 + (gamepad1.left_trigger * 0.25);
+            //full speed mode with left trigger
+        }
 
 
-        fl.setPower(flp);
-        bl.setPower(blp);
-        fr.setPower(frp);
-        br.setPower(brp);
+        fl.setPower(multiplier*flp);
+        bl.setPower(multiplier*blp);
+        fr.setPower(multiplier*frp);
+        br.setPower(multiplier*brp);
     }
     /**
      * Get robot heading in radians
