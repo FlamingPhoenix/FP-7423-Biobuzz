@@ -50,7 +50,7 @@ public class TagProcessor {
             if(detection instanceof AprilTagSingleDetection) {
                 AprilTagSingleDetection singleDetection = (AprilTagSingleDetection) detection;
                 int id = singleDetection.id;
-                TagDetection.TagColor color = contains(blueTags, id) ? TagDetection.TagColor.BLUE : TagDetection.TagColor.RED;
+                TagDetection.TagColor color = contains(blueTags, id) ? TagDetection.TagColor.BLUE : (contains(redTags, id) ? TagDetection.TagColor.RED : TagDetection.TagColor.UNKNOWN);
 
                 Pose3D pose = new Pose3D(
                         new Position(

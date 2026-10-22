@@ -5,8 +5,14 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
+/**
+ * PinPointIMU is a wrapper for the GoBildaPinpointDriver that implements the DriveIMU interface.
+ * It provides methods to get the yaw of the robot and reset the yaw.
+ * Steals parameters from pedroPathing's Constants.localizerConfig to set up the pinpoint driver.
+ */
 public class PinPointIMU implements DriveIMU{
     GoBildaPinpointDriver pp;
     double angleOffest = 0;
@@ -52,5 +58,14 @@ public class PinPointIMU implements DriveIMU{
             adjustedAngle -= 2 * Math.PI;
         }
         return adjustedAngle;
+    }
+    public YawPitchRollAngles getYawPitchRoll(AngleUnit unit){
+        return new YawPitchRollAngles(
+                unit,
+                pp.getHeading(unit),
+                pp.getPitch(unit),
+                pp.getRoll(unit),
+                0
+        );
     }
 }

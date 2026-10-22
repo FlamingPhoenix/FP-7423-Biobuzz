@@ -7,6 +7,7 @@ public class TagDetection {
     public enum TagColor {
         RED,
         BLUE,
+        UNKNOWN
     }
 
     public TagColor color;

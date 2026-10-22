@@ -58,4 +58,8 @@ public class ShooterController {
     public double getMaxCurrent(){
         return Math.max(shooterMotor1.getCurrent(CurrentUnit.AMPS), shooterMotor2.getCurrent(CurrentUnit.AMPS));
     }
+    public double getPower(){
+        // average both motors' powers to get a more accurate reading
+        return (shooterMotor1.getPower() + shooterMotor2.getPower()) / 2;
+    }
 }
