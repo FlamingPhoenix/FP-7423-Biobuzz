@@ -20,8 +20,8 @@ public class ShooterController {
         setPIDCoefficients(pidf);
     }
     private void initMotors(HardwareMap hardwareMap){
-        shooterMotor1 = hardwareMap.get(DcMotorEx.class, "shooter1");
-        shooterMotor2 = hardwareMap.get(DcMotorEx.class, "shooter2");
+        shooterMotor1 = hardwareMap.get(DcMotorEx.class, "SHTRL");
+        shooterMotor2 = hardwareMap.get(DcMotorEx.class, "SHTRR");
         shooterMotor1.setDirection(DcMotorEx.Direction.REVERSE);
         shooterMotor2.setDirection(DcMotorEx.Direction.FORWARD);
         shooterMotor1.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
