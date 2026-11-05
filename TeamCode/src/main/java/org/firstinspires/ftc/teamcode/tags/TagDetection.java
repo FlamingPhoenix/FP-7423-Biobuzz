@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.tags;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
 public class TagDetection {
