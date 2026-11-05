@@ -1,7 +1,8 @@
+
 plugins {
     id 'com.android.library'
 }
-
+apply from: '../build.dependencies.gradle'
 android {
     namespace 'com.flamingphoenix.nativebridge'
     compileSdk {
